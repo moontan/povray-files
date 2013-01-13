@@ -1,0 +1,2 @@
+Thanks to Homebrew I just recently rediscovered the amazing povray 3D raytracing package and played around with it a little. I hope to add an experimental study script for generating pov files here every now and then, and perhaps a couple of pov files as well.
+(Note: The scripts will probably require bash 4.2, also available through Homebrew.)
