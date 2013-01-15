@@ -13,7 +13,7 @@ POV="$FILENAME.pov"
 IMAGE="$FILENAME.png"
 
 if [ -z $2 ]; then
-NUM=6
+NUM=$((2+(RANDOM % 14)))
 else
 NUM=$2
 fi
@@ -36,7 +36,7 @@ else
 CAMPOSY=$4
 fi
 
-for i in {1..7};
+for i in $(eval echo {1..$NUM});
 do
 POSX[$i]=$((-18 + (RANDOM % 36)))
 POSZ[$i]=$((-16 + (RANDOM % 66)))
@@ -47,13 +47,13 @@ POSXW[$i]=$(echo "scale=6; ${POSX[i]}+2*c(${ROTA[i]})" | bc -l)
 POSZW[$i]=$(echo "scale=6; ${POSZ[i]}+2*s(${ROTA[i]})" | bc -l)
 CENX=$((CENX + POSX[i]))
 CENZ=$((CENZ + POSZ[i]))
-RED[$i]=$(echo "scale=2; $((RANDOM % 1000))/8000+.875" | bc -l)
-GRN[$i]=$(echo "scale=2; $((RANDOM % 1000))/4000+.25" | bc -l)
-BLU[$i]=$(echo "scale=2; $((RANDOM % 1000))/4000+.25" | bc -l)
+RED[$i]=$(echo "scale=2; $((RANDOM % 100))/100" | bc -l)
+GRN[$i]=$(echo "scale=2; $((RANDOM % 100))/100" | bc -l)
+BLU[$i]=$(echo "scale=2; $((RANDOM % 100))/100" | bc -l)
 COL[$i]=""
 done
-CENX=$(echo "scale=1; $CENX/10" | bc -l)
-CENZ=$(echo "scale=1; $CENZ/10" | bc -l)
+CENX=$(echo "scale=1; $CENX/$NUM" | bc -l)
+CENZ=$(echo "scale=1; $CENZ/$NUM" | bc -l)
 echo $CENX, $CENZ
 
 echo -e \/\/ plane of pills generated on $(date) > $POV
@@ -66,9 +66,9 @@ for LIGHTZ in {-75..75..150}; do
 	done
 done
 
-echo -e "\nplane {\n\t<0, 1, 0>, -1\n\t texture { T_Stone28 scale 6 }\n}" >> $POV
+echo -e "\nplane {\n\t<0, 1, 0>, -1\n\t texture { T_Stone26 scale 6 }\n}" >> $POV
 
-for i in {1..7};
+for i in $(eval echo {1..$NUM});
 do
 echo -e "\n\t// Pill #$i" >> $POV
 echo -en "\nsphere {\n\t<${POSXC[i]}, 0, ${POSZC[i]}>, 1\n\tpigment { color rgb <${RED[i]}, ${GRN[i]}, ${BLU[i]}> }\n}" >> $POV
